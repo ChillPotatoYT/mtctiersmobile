@@ -11,7 +11,7 @@
     --bg: #010102; --purple: #a855f7; --purple-glow: rgba(168, 85, 247, 0.9);
     --border: rgba(168, 85, 247, 0.4); --gold: #ffd700; --gold-glow: rgba(255, 215, 0, 0.6); --grey: #888;
     --na-color: #3498db; --eu-color: #ff4d4d; --sa-color: #00ff88; --oc-color: #ff00ff; --as-color: #ff8800;
-    --af-color: #00d4ff; /* AFRICA COLOR */
+    --af-color: #00d4ff;
 }
 body { background: var(--bg); color: #fff; font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; min-height: 100vh; font-size: 0.9rem; }
 
@@ -181,7 +181,8 @@ function render(kit) {
             let has = false;
             for(let t in DATA[kit]) if(t.includes(lvl)) DATA[kit][t].forEach(name => {
                 has = true; const isR = t.startsWith('R');
-                col += `<div class="tier-card clickable" style="width:200px; padding:12px;" onclick="openProfile('${name}')"><span style="font-size:0.9rem; font-weight:bold;">${name}</span>${getTags(name)}<div style="font-size:0.6rem; color:${isR?'var(--grey)':'var(--gold)'}; margin-top:5px; font-weight:bold;">${isR?'Retired '+t.slice(1):t}</div></div>`;
+                const displayLabel = isR ? 'Retired ' + t.substring(1) : t;
+                col += `<div class="tier-card clickable" style="width:200px; padding:12px;" onclick="openProfile('${name}')"><span style="font-size:0.9rem; font-weight:bold;">${name}</span>${getTags(name)}<div style="font-size:0.6rem; color:${isR?'var(--grey)':'var(--gold)'}; margin-top:5px; font-weight:bold;">${displayLabel}</div></div>`;
             });
             if(has) { col += `</div>`; grid.innerHTML += col; }
         });
@@ -223,7 +224,7 @@ function openProfile(name) {
     for(let k in DATA) if(k!=="Overall" && k!=="Players") for(let t in DATA[k]) if(DATA[k][t].includes(name)) {
         const isR = t.startsWith('R');
         const color = isR ? 'var(--grey)' : 'var(--gold)';
-        const display = isR ? 'HT' + t.substring(2) : t; // HT1 instead of High Tier 1
+        const display = isR ? 'Retired ' + t.substring(1) : t;
         grid += `<div class="p-kit-item">
             <div class="kit-popup" style="border-color:${color}"><span style="color:${color}">${display}</span><br><span style="color:#666">${k}</span></div>
             <div class="p-kit-circle" style="border-color:${color}">${KIT_MAP[k]?`<img src="${KIT_MAP[k]}">`:''}</div>
