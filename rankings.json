@@ -19,7 +19,9 @@
     { "name": "drago", "region": "AS", "device": "MK" },
     { "name": "Kirby", "region": "AS", "device": "MK" },
     { "name": "NetworkHero", "region": "EU", "device": "MK" },
-    { "name": "LifoMC", "region": "AF", "device": "MK" }
+    { "name": "LifoMC", "region": "AF", "device": "MK" },
+    { "name": "AntonioZga9", "region": "NA", "device": "MB" },
+    { "name": "-_Hades_-", "region": "NA", "device": "CT" }
   ],
 
   "Emerald": {
@@ -40,10 +42,10 @@
     "HT2": ["sample", "skibidi1234", "ItzNoob_"],
     "RHT2": ["TimmyLoal", "LifoMC"],
     "LT2": ["ChillPotato", "big-nub", "NotMythxc4l"],
-    "HT3": ["V4n1shed", "Possessed_YT", "Lxderr"],
+    "HT3": ["V4n1shed", "Possessed_YT", "Lxderr", "-_Hades_-"],
     "LT3": ["revan", "TQMEN"],
     "HT4": ["Kirby", "NetworkHero", "drago"],
-    "HT5": ["FarXD"]
+    "HT5": ["FarXD", "AntonioZga9"]
   },
 
   "Emerald OA": {},
