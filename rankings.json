@@ -27,7 +27,8 @@
     { "name": "MatrixOP980", "region": "AS", "device": "MB" },
     { "name": "unseen-faceless", "region": "AS", "device": "MB" },
     { "name": "SaintOfZytrox", "region": "AS", "device": "MB" },
-    { "name": "f0rg1v3n", "region": "AS", "device": "MK" }
+    { "name": "f0rg1v3n", "region": "AS", "device": "MK" },
+    { "name": "Afdemonking", "region": "EU", "device": "MB" }
   ],
 
   "Emerald": {
@@ -41,7 +42,7 @@
     "HT4": ["FarXD"],
     "LT4": ["Lxderr"],
     "HT5": ["ArpanYT", "MatrixOP980"],
-    "LT5": ["MGK"]
+    "LT5": ["MGK", "Afdemonking"]
   },
 
   "Dragonhide KB": {
