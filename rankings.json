@@ -13,7 +13,6 @@
     { "name": "revan", "region": "NA", "device": "TP" },
     { "name": "ItzNoob_", "region": "AS", "device": "MK" },
     { "name": "big-nub", "region": "EU", "device": "MK" },
-    { "name": "Lxderr", "region": "EU", "device": "MB" },
     { "name": "FarXD", "region": "AS", "device": "MB" },
     { "name": "drago", "region": "AS", "device": "MK" },
     { "name": "Kirby", "region": "AS", "device": "MK" },
@@ -51,7 +50,7 @@
     "HT3": ["revan", "CJSHORT", "V4n1shed"],
     "LT3": ["big-nub", "Husky_Multicraft"],
     "HT4": ["FarXD", "Mane"],
-    "LT4": ["Lxderr"],
+    "LT4": [],
     "HT5": ["ArpanYT", "MatrixOP980"],
     "LT5": ["MGK", "Afdemonking"]
   },
