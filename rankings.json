@@ -55,7 +55,7 @@
     "LT5": ["MGK", "Afdemonking"]
   },
 
-  "Dragonhide KB": {
+  "Dragonhide_KB": {
     "HT1": ["Game1K"],
     "LT1": ["system1117", "DivyamGamerYT"],
     "HT2": ["sample", "skibidi1234", "ItzNoob_"],
@@ -69,9 +69,9 @@
     "LT5": ["MGK", "ArpanYT"]
   },
 
-  "Emerald OA": {},
-  "Dragonhide KB OA": {},
-  "Wand": {},
-  "Emerald KB": {},
-  "Diamond": {}
+  "Emerald_OA": [],
+  "Dragonhide_KB_OA": [],
+  "Wand": [],
+  "Emerald_KB": [],
+  "Diamond": []
 }
