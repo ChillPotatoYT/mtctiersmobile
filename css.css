@@ -146,3 +146,54 @@ nav {
     background: #000; border: 1px solid var(--purple); border-radius: 50%; 
     color: var(--purple); display: flex; align-items: center; justify-content: center; cursor: pointer; 
 }
+
+/* --- Fix Image 3: Larger Profile Modal --- */
+.modal-content { 
+    max-width: 500px !important; 
+    width: 90%;
+    padding: 30px !important; 
+    border: 2px solid var(--purple) !important; 
+    background: rgba(0,0,0,0.98) !important;
+    box-shadow: 0 0 30px rgba(0,0,0,1);
+}
+
+/* --- Fix Image 1 & 2: Prevent Kit Squishing --- */
+.p-kit-item { 
+    position: relative; 
+    display: inline-flex; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 100px; 
+    margin: 15px 5px; 
+}
+
+.p-kit-circle { 
+    width: 60px; height: 60px; 
+    border: 2px solid var(--gold); 
+    border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; 
+    background: transparent !important; 
+    margin-bottom: 8px; 
+}
+
+.kit-popup {
+    position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%) translateY(5px);
+    background: #000; border: 1px solid var(--gold); padding: 8px 12px; border-radius: 4px;
+    text-align: center; opacity: 0; visibility: hidden; transition: 0.1s;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); z-index: 1000; 
+    white-space: nowrap; 
+}
+
+.p-kit-item:hover .kit-popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+/* --- Fix: Hover Tooltips for Tags --- */
+.tag { position: relative; cursor: help; pointer-events: auto !important; }
+.tag:hover::after {
+    content: attr(data-title); 
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: #111; color: #fff; padding: 5px 10px; font-size: 0.7rem; 
+    border: 1px solid var(--gold); border-radius: 4px; white-space: nowrap; z-index: 1001;
+}
+
+/* --- Fix: Gray No Ranked Players Text --- */
+.empty-msg { color: #666 !important; font-size: 1.2rem; margin-top: 60px; text-align: center; width: 100%; }
