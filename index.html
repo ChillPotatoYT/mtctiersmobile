@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTC TIERS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css?v=777">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/assets/backgroundsword.png">
     <meta property="og:title" content="MTC TIERS">
     <meta property="og:description" content="Rankings and Tiertesting for MultiCraft.">
-    <meta property="og:url" content="https://mtctiers.github.io/">
-    <meta property="og:image" content="https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/assets/backgroundsword.png">
-    <meta property="og:type" content="website">
 </head>
 <body>
 <div class="sweep-bg"></div>
@@ -57,7 +54,7 @@
     <div class="modal-content" onclick="event.stopPropagation()">
         <div id="pRank" style="font-family:'MultiCraftFont'; color:var(--purple); font-size:0.7rem;">RANK #--</div>
         <h2 id="pName" style="font-family:'MultiCraftFont'; color:#fff; margin:10px 0; font-size: 1.8rem;">Player</h2>
-        <div id="pMeta" style="margin-bottom: 15px;"></div>
+        <div id="pMeta" style="display:flex; justify-content:center; gap:8px; margin-bottom: 15px;"></div>
         <div id="pPoints" style="color:var(--gold); font-family:'MultiCraftFont'; font-size:1.4rem; margin-bottom:20px;">0 PTS</div>
         <div id="pTiers" style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; border-top:1px solid #222; padding-top:20px;"></div>
     </div>
@@ -67,32 +64,9 @@
 const ASSETS = "https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/assets/";
 const DATA_PATH = "https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/data/";
 
-const KIT_MAP = { 
-    "Overall": "", 
-    "Emerald": "emerald.png", 
-    "Emerald KB": "emerald_kb.png", 
-    "Emerald OA": "emerald_oa.png", 
-    "Dragonhide KB": "dragonhide_kb.png", 
-    "Dragonhide KB OA": "kb_oa.png", 
-    "Wand": "wand.png", 
-    "Diamond": "diamond.png" 
-};
-
-const REG_MAP = {
-    "NA": "North America",
-    "EU": "Europe", 
-    "SA": "South America", 
-    "OC": "Oceania", 
-    "AS": "Asia", 
-    "AF": "Africa" 
-};
-
-const DEV_MAP = {
-    "MK": "Mouse & Keyboard",
-    "MB": "Mobile",
-    "CT": "Controller",
-    "TP": "Touchpad" 
-};
+const KIT_MAP = { "Overall": "", "Emerald": "emerald.png", "Emerald KB": "emerald_kb.png", "Emerald OA": "emerald_oa.png", "Dragonhide KB": "dragonhide_kb.png", "Dragonhide KB OA": "kb_oa.png", "Wand": "wand.png", "Diamond": "diamond.png" };
+const REG_MAP = { "NA": "North America", "EU": "Europe", "SA": "South America", "OC": "Oceania", "AS": "Asia", "AF": "Africa" };
+const DEV_MAP = { "MK": "Mouse & Keyboard", "MB": "Mobile", "CT": "Controller", "TP": "Touchpad" };
 
 let DATA = {};
 let CURRENT_TAB = 'rankings';
@@ -141,10 +115,6 @@ function render(kit) {
     if(CURRENT_TAB !== 'rankings') return;
     document.getElementById('viewLabel').innerText = kit.toUpperCase();
     const out = document.getElementById('displayList'); out.innerHTML = "";
-    if(kit !== "Overall" && (!DATA[kit] || Object.keys(DATA[kit]).length === 0)) {
-        out.innerHTML = `<h2 style="font-family:'MultiCraftFont'; color:#444; margin-top:50px;">NO RANKED PLAYERS</h2>`;
-        return;
-    }
     if(kit === "Overall") {
         Object.entries(DATA.Overall).sort((a,b)=>b[1]-a[1]).forEach(([name, pts], i) => {
             out.innerHTML += `<div class="tier-card clickable" onclick="openProfile('${name}')"><div style="display:flex; justify-content:space-between; align-items:center;"><div><b style="color:var(--purple); margin-right:15px; font-size:1rem;">#${i+1}</b><span style="font-weight:bold; font-size:1rem;">${name}</span>${getTags(name)}</div><b style="color:var(--gold); font-size:1rem;">${pts} PTS</b></div></div>`;
@@ -195,25 +165,16 @@ function openProfile(name) {
     document.getElementById('pName').innerText = name;
     document.getElementById('pMeta').innerHTML = getTags(name);
     document.getElementById('pPoints').innerText = DATA.Overall[name] + " PTS";
-    
     let grid = "";
-    for(let k in DATA) {
-        if(k!=="Overall" && k!=="Players") {
-            for(let t in DATA[k]) {
-                if(DATA[k][t].includes(name)) {
-                    const isR = t.startsWith('R');
-                    const color = isR ? 'var(--grey)' : 'var(--gold)';
-                    const display = isR ? 'Retired ' + t.substring(1) : t;
-                    grid += `<div class="p-kit-item">
-                        <div class="kit-popup"><b>${k.toUpperCase()}</b><br>${display}</div>
-                        <div class="p-kit-circle" style="border-color:${color}">
-                            ${KIT_MAP[k]?`<img src="${ASSETS}${KIT_MAP[k]}">`:''}
-                        </div>
-                        <div style="font-size:0.6rem; color:${color}; font-weight:bold; margin-top:5px;">${display}</div>
-                    </div>`;
-                }
-            }
-        }
+    for(let k in DATA) if(k!=="Overall" && k!=="Players") for(let t in DATA[k]) if(DATA[k][t].includes(name)) {
+        const isR = t.startsWith('R');
+        const color = isR ? 'var(--grey)' : 'var(--gold)';
+        const display = isR ? 'Retired ' + t.substring(1) : t;
+        grid += `<div class="p-kit-item">
+            <div class="kit-popup"><b>${k.toUpperCase()}</b><br>${display}</div>
+            <div class="p-kit-circle" style="border-color:${color}">${KIT_MAP[k]?`<img src="${ASSETS}${KIT_MAP[k]}">`:''}</div>
+            <div style="font-size:0.6rem; color:${color}; font-weight:bold; margin-top:5px;">${display}</div>
+        </div>`;
     }
     document.getElementById('pTiers').innerHTML = grid;
     document.getElementById('profileModal').style.display = 'flex';
@@ -223,13 +184,12 @@ function handleSearch(val) {
     const pop = document.getElementById('searchPopup');
     if(!val) { pop.style.display = 'none'; return; }
     const matches = Object.keys(DATA.Overall || {}).filter(n => n.toLowerCase().includes(val.toLowerCase())).slice(0, 5);
-    pop.innerHTML = matches.map(m => `<div class="search-item" onclick="openProfile('${m}'); document.getElementById('searchPopup').style.display='none';"><b>${m}</b> <span style="color:var(--purple); font-size:0.5rem;">VIEW PROFILE</span></div>`).join('') || "";
+    pop.innerHTML = matches.map(m => `<div class="search-item" onclick="openProfile('${m}'); document.getElementById('searchPopup').style.display='none';"><b>${m}</b> <span style="color:var(--purple); font-size:0.5rem;">VIEW</span></div>`).join('');
     pop.style.display = matches.length ? 'block' : 'none';
 }
 
 function openInfo() { document.getElementById('infoModal').style.display = 'flex'; }
 load();
-document.addEventListener('click', (e) => { if(!e.target.closest('.search-wrap')) document.getElementById('searchPopup').style.display = 'none'; });
 </script>
 </body>
 </html>
