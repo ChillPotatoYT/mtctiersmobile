@@ -4,58 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTC TIERS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css?v=888">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css?v=999">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/assets/backgroundsword.png">
 
     <style>
-        /* --- THE NUCLEAR ALIGNMENT FIX --- */
+        /* --- THE NUCLEAR CENTERING FIX --- */
         .tag-wrap, .p-kit-item {
             position: relative !important;
             display: inline-flex !important;
             flex-direction: column !important;
             align-items: center !important;
-            justify-content: center !important;
         }
 
-        /* Centering the icon inside the circle */
+        /* Centering the icon inside the gold circle */
         .p-kit-circle {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            margin: 0 auto 8px auto !important;
-            overflow: hidden !important;
+            width: 60px !important;
+            height: 60px !important;
+            margin: 0 auto !important;
+            background: #000 !important;
+            border-radius: 50% !important;
+            border: 2px solid var(--gold) !important;
         }
 
         .p-kit-circle img {
             display: block !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 34px !important;
+            height: 34px !important;
             margin: 0 !important;
         }
 
-        /* Fixing the Popup position and style */
+        /* --- THE POPUP LOOK (MATCHES IMAGE 2) --- */
         .tag-popup, .kit-popup {
             position: absolute !important;
-            bottom: 120% !important;
+            bottom: 110% !important; /* Positioned just above */
             left: 50% !important;
             transform: translateX(-50%) translateY(10px) !important;
-            background: #08080c !important;
+            background: #000 !important; /* Solid Black */
             color: #fff !important;
-            padding: 10px 16px !important;
+            padding: 10px 14px !important;
             font-size: 0.75rem !important;
             font-family: 'MultiCraftFont', monospace !important;
             border-radius: 8px !important;
-            border: 2px solid #a855f7 !important; /* Purple */
+            border: 2px solid #a855f7 !important; /* Purple Border */
             white-space: nowrap !important;
-            box-shadow: 0 0 20px rgba(0,0,0,1) !important;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8) !important;
             opacity: 0 !important;
             visibility: hidden !important;
             transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
             z-index: 9999 !important;
             text-align: center !important;
+            line-height: 1.3 !important;
         }
 
-        .kit-popup { border-color: #ffd700 !important; bottom: 130% !important; }
+        /* Gold border for kit popups */
+        .kit-popup { border-color: #ffd700 !important; bottom: 120% !important; }
 
         /* Triggering the Hover */
         .tag-wrap:hover .tag-popup, 
@@ -94,7 +99,7 @@
         <h2 id="pName" style="font-family:'MultiCraftFont'; color:#fff; margin:10px 0; font-size: 1.8rem;">Player</h2>
         <div id="pMeta" style="display:flex; justify-content:center; gap:8px; margin-bottom: 15px;"></div>
         <div id="pPoints" style="color:var(--gold); font-family:'MultiCraftFont'; font-size:1.4rem; margin-bottom:20px;">0 PTS</div>
-        <div id="pTiers" style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; border-top:1px solid #222; padding-top:20px;"></div>
+        <div id="pTiers" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; border-top:1px solid #222; padding-top:20px;"></div>
     </div>
 </div>
 
@@ -181,16 +186,27 @@ function openProfile(name) {
     document.getElementById('pName').innerText = name;
     document.getElementById('pMeta').innerHTML = getTags(name);
     document.getElementById('pPoints').innerText = DATA.Overall[name] + " PTS";
+    
     let grid = "";
-    for(let k in DATA) if(k!=="Overall" && k!=="Players") for(let t in DATA[k]) if(DATA[k][t].includes(name)) {
-        const isR = t.startsWith('R');
-        const color = isR ? 'var(--grey)' : 'var(--gold)';
-        const display = isR ? 'Retired ' + t.substring(1) : t;
-        grid += `<div class="p-kit-item">
-            <div class="kit-popup"><b>${k.toUpperCase()}</b><br>${display}</div>
-            <div class="p-kit-circle" style="border-color:${color}">${KIT_MAP[k]?`<img src="${ASSETS}${KIT_MAP[k]}">`:''}</div>
-            <div style="font-size:0.6rem; color:${color}; font-weight:bold; margin-top:5px;">${display}</div>
-        </div>`;
+    // Loop through kits to find player's rankings
+    for(let k in DATA) {
+        if(k === "Overall" || k === "Players") continue;
+        for(let t in DATA[k]) {
+            if(DATA[k][t].includes(name)) {
+                const isR = t.startsWith('R');
+                const tierColor = isR ? 'var(--grey)' : 'var(--gold)';
+                const displayTier = isR ? 'Retired ' + t.substring(1) : t;
+                
+                grid += `
+                <div class="p-kit-item">
+                    <div class="kit-popup"><b>${k.toUpperCase()}</b><br>${displayTier}</div>
+                    <div style="font-family:'MultiCraftFont'; font-size:0.6rem; color:${tierColor}; margin-bottom:5px;">${displayTier}</div>
+                    <div class="p-kit-circle" style="border-color:${tierColor}">
+                        ${KIT_MAP[k] ? `<img src="${ASSETS}${KIT_MAP[k]}">` : ''}
+                    </div>
+                </div>`;
+            }
+        }
     }
     document.getElementById('pTiers').innerHTML = grid;
     document.getElementById('profileModal').style.display = 'flex';
