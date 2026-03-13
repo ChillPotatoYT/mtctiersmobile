@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MTC TIERS</title>
-<link rel="icon" type="image/png" href="backgroundsword.png">
+<link rel="icon" type="image/png" href="assets/backgroundsword.png">
 <meta property="og:title" content="MTC TIERS">
 <meta property="og:description" content="Rankings and Tiertesting for MultiCraft.">
 <meta property="og:url" content="https://mtctiers.github.io/">
-<meta property="og:image" content="https://mtctiers.github.io/backgroundsword.png">
+<meta property="og:image" content="https://mtctiers.github.io/assets/backgroundsword.png">
 <meta property="og:type" content="website">
 <style>
 @font-face { font-family: 'MultiCraftFont'; src: url('MultiCraftFont.ttf') format('truetype'); }
@@ -136,17 +136,30 @@ let CURRENT_KIT = 'Overall';
 // Updated KIT_MAP for correct file discovery and display names
 const KIT_MAP = { 
     "Overall": "", 
-    "Emerald": "emerald.png", 
-    "Emerald KB": "emerald_kb.png", 
-    "Emerald OA": "emerald_oa.png", 
-    "Dragonhide KB": "dragonhide_kb.png", 
-    "Dragonhide KB OA": "kb_oa.png", 
-    "Wand": "wand.png", 
-    "Diamond": "diamond.png" 
+    "Emerald": "assets/emerald.png", 
+    "Emerald KB": "assets/emerald_kb.png", 
+    "Emerald OA": "assets/emerald_oa.png", 
+    "Dragonhide KB": "assets/dragonhide_kb.png", 
+    "Dragonhide KB OA": "assets/kb_oa.png", 
+    "Wand": "assets/wand.png", 
+    "Diamond": "assets/diamond.png" 
 };
 
-const REG_MAP = { "NA": "North America", "EU": "Europe", "SA": "South America", "OC": "Oceania", "AS": "Asia", "AF": "Africa" };
-const DEV_MAP = { "MK": "Mouse & Keyboard", "MB": "Mobile", "CT": "Controller", "TP": "Touchpad" };
+const REG_MAP = {
+    "NA": "North America",
+    "EU": "Europe",
+    "SA": "South America",
+    "OC": "Oceania",
+    "AS": "Asia",
+    "AF": "Africa"
+};
+
+const DEV_MAP = {
+    "MK": "Mouse & Keyboard",
+    "MB": "Mobile",
+    "CT": "Controller",
+    "TP": "Touchpad" 
+};
 
 function getTags(name) {
     const p = DATA.Players?.find(x => x.name === name) || {region:"?", device:"?"};
@@ -159,7 +172,7 @@ function getTags(name) {
 }
 
 async function load() {
-    const r = await fetch(`https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/rankings.json?v=${Date.now()}`);
+    const r = await fetch(`https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/data/rankings.json?v=${Date.now()}`);
     DATA = await r.json();
     let totals = {};
     const PTS = { "HT1":50, "LT1":40, "HT2":30, "LT2":20, "HT3":12, "LT3":8, "HT4":5, "LT4":3, "HT5":2, "LT5":1 };
@@ -217,7 +230,7 @@ async function switchTab(tab) {
     if(tab === 'rankings') { kb.style.display="flex"; render(CURRENT_KIT); }
     else {
         kb.style.display="none"; lb.innerText = tab === 'hof' ? "HALL OF FAME" : "TIER TESTERS";
-        const r = await fetch(`https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/${tab}.json?v=${Date.now()}`);
+        const r = await fetch(`https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/data/${tab}.json?v=${Date.now()}`);
         const data = await r.json();
         data.forEach(i => {
             const hasProf = DATA.Overall?.[i.name];
