@@ -1,12 +1,7 @@
-:root {
-    --purple: #8b5cf6;
-    --gold: #ffd700;
-    --bg: #0a0a0a;
-}
-
+/* FORCE FONT ON EVERYTHING - Using your Assets folder */
 @font-face {
     font-family: 'MultiCraftFont';
-    src: url('MultiCraftFont.tff') format('truetype');
+    src: url('assets/MultiCraftFont.tff') format('truetype');
 }
 
 * {
@@ -16,156 +11,123 @@
     font-family: 'MultiCraftFont', sans-serif !important;
 }
 
+:root {
+    --purple: #8b5cf6;
+    --gold: #ffd700;
+    --bg: #0a0a0a;
+    --card-bg: #0d0d0d;
+}
+
 body {
     background-color: var(--bg);
     color: #fff;
-    min-height: 100vh;
     padding: 20px;
+}
+
+/* Fix for Huge Boxes: Use a proper grid for the tiers */
+.tier-column {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-/* Background Effect */
-.sweep-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at 50% -20%, #1a1a2e 0%, #0a0a0a 80%);
-    z-index: -1;
-}
-
-header { text-align: center; margin-bottom: 30px; }
-.title-sword { width: 60px; margin-bottom: 10px; }
-.main-title { font-size: 2.5rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--purple); }
-
-/* Navigation */
-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    gap: 15px;
     width: 100%;
-    max-width: 800px;
-    margin-bottom: 40px;
+    max-width: 320px; /* Limits box width so they aren't huge */
+    min-width: 250px;
 }
 
-.nav-center { display: flex; gap: 30px; }
-.nav-link { 
-    cursor: pointer; 
-    font-size: 1.1rem; 
-    color: #888; 
-    transition: 0.3s;
-    padding: 5px 10px;
-}
-.nav-link:hover, .nav-link.active { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
-
-/* Search bar */
-.search-wrap { position: relative; width: 300px; }
-#playerSearch {
-    width: 100%;
-    background: #111;
-    border: 1px solid #333;
-    padding: 10px 15px;
-    color: #fff;
-    border-radius: 4px;
-    outline: none;
-}
-#searchPopup {
-    position: absolute; top: 110%; left: 0; width: 100%;
-    background: #111; border: 1px solid var(--gold);
-    z-index: 2000; display: none;
-}
-.search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #222; }
-.search-item:hover { background: #222; }
-
-/* Kit Bar */
-#kitBar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
-.kit-btn {
-    background: #111; border: 1px solid #333; color: #888;
-    padding: 8px 16px; cursor: pointer; transition: 0.2s;
-    display: flex; align-items: center;
-}
-.kit-btn:hover, .kit-btn.active { border-color: var(--gold); color: #fff; background: #1a1a1a; }
-
-/* Tier Cards */
-#displayList { width: 100%; max-width: 1000px; }
-.tier-header { 
-    color: var(--purple); 
-    font-size: 1.4rem; 
-    margin-bottom: 15px; 
-    text-align: center;
-    border-bottom: 2px solid var(--purple);
-    padding-bottom: 5px;
-}
 .tier-card {
-    background: #111;
+    background: var(--card-bg);
     border: 1px solid #222;
     padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    border-radius: 8px;
+    text-align: center;
     transition: 0.2s;
     position: relative;
+    width: 100%;
 }
-.tier-card.clickable:hover { border-color: var(--purple); transform: translateY(-2px); cursor: pointer; }
 
-/* Tags & Tooltips */
+.tier-card.clickable:hover {
+    border-color: var(--purple);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    cursor: pointer;
+}
+
+/* Fix Image 1: Hover on Regions/Devices */
 .tag {
-    font-size: 0.6rem;
-    padding: 2px 6px;
-    border-radius: 3px;
-    color: #fff;
-    margin-top: 5px;
-    display: inline-block;
     position: relative !important;
+    display: inline-block;
     cursor: help !important;
-    pointer-events: auto !important;
+    pointer-events: auto !important; /* Forces hover to work */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    margin: 5px 2px;
 }
-.reg-na { background: #3b82f6; }
-.reg-eu { background: #ef4444; }
-.reg-as { background: #10b981; }
-.reg-oc { background: #f59e0b; }
-.reg-af { background: #8b5cf6; }
-.reg-sa { background: #ec4899; }
-
-.dev-mk { background: #6b7280; }
-.dev-tp { background: #4b5563; }
-.dev-mb { background: #374151; }
-.dev-ct { background: #1f2937; }
 
 .tag:hover::after {
     content: attr(data-title);
-    position: absolute; bottom: 140%; left: 50%; transform: translateX(-50%);
-    background: #000; color: #fff; padding: 6px 10px; font-size: 0.7rem;
-    border: 1px solid var(--gold); border-radius: 4px; white-space: nowrap;
-    z-index: 9999 !important; pointer-events: none;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: var(--gold);
+    padding: 5px 10px;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 9999;
 }
 
-/* Modal */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center;
-    z-index: 3000;
-}
+/* Fix Image 2: Kit Hover & Profile Sizing */
 .modal-content {
-    max-width: 500px !important; width: 90%; padding: 30px !important;
-    background: rgba(10,10,10,0.98) !important; border: 2px solid var(--purple) !important;
+    max-width: 550px !important; /* Larger modal from your screenshot */
+    width: 95%;
+    background: rgba(5, 5, 5, 0.98);
+    border: 2px solid var(--purple);
+    padding: 40px;
     text-align: center;
 }
 
-/* Kit Items in Profile */
-.p-kit-item { position: relative; display: inline-flex; flex-direction: column; align-items: center; width: 100px; margin: 15px 5px; }
-.p-kit-circle { 
-    width: 60px; height: 60px; border: 2px solid var(--gold); border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; margin-bottom: 8px; 
+.p-kit-item {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    margin: 10px;
 }
+
+.p-kit-circle {
+    width: 70px;
+    height: 70px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+/* The Popup that replaces the static text in Image 2 */
 .kit-popup {
-    position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%) translateY(5px);
-    background: #000; border: 1px solid var(--gold); padding: 8px 12px; border-radius: 4px;
-    opacity: 0; visibility: hidden; transition: 0.1s; white-space: nowrap; z-index: 1000;
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: #000;
+    border: 1px solid var(--gold);
+    padding: 8px 12px;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s;
+    z-index: 100;
 }
-.p-kit-item:hover .kit-popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-/* Empty Message */
-.empty-msg { color: #666 !important; font-size: 1.2rem; margin-top: 60px; text-align: center; width: 100%; }
+.p-kit-item:hover .kit-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
 
-.hof-desc { color: #aaa; font-size: 0.85rem; margin-top: 8px; line-height: 1.4; }
+.empty-msg { color: #555 !important; text-align: center; margin-top: 50px; }
