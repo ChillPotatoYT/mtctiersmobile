@@ -4,14 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTC TIERS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css?v=155">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mtctiers/mtctiers.github.io@main/css.css?v=160">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mtctiers/mtctiers.github.io/refs/heads/main/assets/backgroundsword.png">
 
     <style>
-        /* MODAL FIXES */
-        .modal-content { max-width: 350px !important; padding: 15px !important; border: 2px solid var(--purple) !important; overflow: hidden !important; }
+        /* --- LOCAL FONT LOADING --- */
+        @font-face {
+            font-family: 'MultiCraftFont';
+            src: url('MultiCraftFont.tff') format('truetype');
+        }
+
+        body, button, input, div, span {
+            font-family: 'MultiCraftFont', sans-serif;
+        }
+
+        /* --- MODAL BOX REFINEMENT --- */
+        .modal-content { 
+            max-width: 350px !important; 
+            padding: 15px !important; 
+            border: 2px solid var(--purple) !important; 
+            overflow: hidden !important;
+            background: rgba(0,0,0,0.95) !important;
+        }
         
-        /* TRANSPARENT KIT CIRCLES */
+        /* --- TRANSPARENT KIT CIRCLES --- */
         .p-kit-circle { 
             width: 50px; height: 50px; border: 2px solid var(--gold); border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
@@ -19,31 +35,30 @@
         }
         .p-kit-circle img { width: 30px; height: 30px; }
 
-        /* HOVER POPUP WITH MULTICRAFT FONT */
+        /* --- HOVER POPUP (MULTICRAFT FONT) --- */
         .p-kit-item { position: relative; display: inline-flex; flex-direction: column; align-items: center; width: 70px; margin-top: 15px; }
         .kit-popup {
             position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%) translateY(5px);
-            background: rgba(0,0,0,0.95); border: 1px solid var(--gold); padding: 6px 10px; border-radius: 4px;
+            background: #000; border: 1px solid var(--gold); padding: 6px 10px; border-radius: 4px;
             text-align: center; opacity: 0; visibility: hidden; transition: 0.1s;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); z-index: 1000; white-space: nowrap; pointer-events: none;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); z-index: 1000; white-space: nowrap;
         }
         .p-kit-item:hover .kit-popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
         
-        .popup-kit-name { color: #888; font-size: 0.55rem; display: block; font-family: 'MultiCraftFont', sans-serif !important; }
-        .popup-tier-name { color: var(--gold); font-size: 0.8rem; font-weight: bold; display: block; font-family: 'MultiCraftFont', sans-serif !important; }
-        .tier-label-under { font-size: 0.65rem; color: var(--gold); font-family: 'MultiCraftFont'; }
+        .popup-kit-name { color: #888; font-size: 0.6rem; display: block; margin-bottom: 2px; }
+        .popup-tier-name { color: var(--gold); font-size: 0.85rem; font-weight: bold; display: block; }
 
-        /* TAG HOVER TOOLTIPS */
-        .tag { position: relative; cursor: help; pointer-events: auto !important; }
+        /* --- TAG HOVER --- */
+        .tag { position: relative; cursor: help; }
         .tag:hover::after {
             content: attr(data-title); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
             background: #000; color: #fff; padding: 4px 8px; font-size: 0.6rem; border: 1px solid var(--gold);
-            border-radius: 4px; white-space: nowrap; z-index: 1001; font-family: 'MultiCraftFont';
+            border-radius: 4px; white-space: nowrap; z-index: 1001;
         }
 
-        /* HOF & TESTERS STYLING */
-        .hof-desc { color: #aaa; font-size: 0.85rem; margin-top: 5px; font-family: sans-serif; }
-        .tester-discord { color: #7289da; font-size: 0.85rem; font-weight: bold; font-family: monospace; }
+        .hof-desc { color: #aaa; font-size: 0.8rem; margin-top: 5px; line-height: 1.2; }
+        .tester-discord { color: #7289da; font-size: 0.85rem; margin-top: 4px; }
+        .empty-msg { color: var(--gold); font-size: 1.2rem; margin-top: 50px; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
@@ -62,16 +77,16 @@
     </div>
 </nav>
 
-<div id="viewLabel" style="font-family:'MultiCraftFont'; font-size:1.2rem; color:var(--gold); margin:25px 0;">OVERALL</div>
+<div id="viewLabel" style="font-size:1.2rem; color:var(--gold); margin:25px 0;">OVERALL</div>
 <div id="kitBar"></div>
 <div id="displayList"></div>
 
 <div id="profileModal" class="modal-overlay" onclick="this.style.display='none'">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <div id="pRank" style="font-family:'MultiCraftFont'; color:var(--purple); font-size:0.7rem;">RANK #--</div>
-        <h2 id="pName" style="font-family:'MultiCraftFont'; color:#fff; margin:10px 0; font-size: 1.6rem;">Player</h2>
+        <div id="pRank" style="color:var(--purple); font-size:0.7rem;">RANK #--</div>
+        <h2 id="pName" style="color:#fff; margin:10px 0; font-size: 1.6rem;">Player</h2>
         <div id="pMeta" style="display:flex; gap:6px; justify-content:center; margin-bottom: 12px;"></div>
-        <div id="pPoints" style="color:var(--gold); font-family:'MultiCraftFont'; font-size:1.2rem; margin-bottom:15px;">0 PTS</div>
+        <div id="pPoints" style="color:var(--gold); font-size:1.2rem; margin-bottom:15px;">0 PTS</div>
         <div id="pTiers" style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px; border-top:1px solid #333; padding-top:15px;"></div>
     </div>
 </div>
@@ -98,8 +113,7 @@ async function load() {
         buildKitBar();
         render("Overall");
     } catch(e) { 
-        console.error("Critical Load Error:", e);
-        document.getElementById('displayList').innerHTML = `<div style="color:red; font-family:'MultiCraftFont';">ERROR LOADING DATA</div>`;
+        console.error("Load failed:", e);
     }
 }
 
@@ -109,8 +123,7 @@ function calculateOverall() {
     for(let k in DATA.Rankings) {
         for(let t in DATA.Rankings[k]) {
             DATA.Rankings[k][t].forEach(name => {
-                const tier = t.replace('R','');
-                totals[name] = (totals[name]||0) + (PTS[tier]||0);
+                totals[name] = (totals[name]||0) + (PTS[t.replace('R','')]||0);
             });
         }
     }
@@ -120,7 +133,7 @@ function calculateOverall() {
 function getTags(name, centered = false) {
     const p = DATA.Players?.find(x => x.name === name);
     if(!p) return "";
-    return `<div style="display:flex; gap:6px; ${centered ? 'justify-content:center;' : 'justify-content:flex-start;'}">
+    return `<div style="display:flex; gap:6px; ${centered ? 'justify-content:center;' : ''}">
         <span class="tag reg-${p.region.toLowerCase()}" data-title="${REGIONS[p.region]||p.region}">${p.region}</span>
         <span class="tag dev-${p.device.toLowerCase()}" data-title="${DEVICES[p.device]||p.device}">${p.device}</span>
     </div>`;
@@ -129,8 +142,11 @@ function getTags(name, centered = false) {
 function render(kit) {
     const out = document.getElementById('displayList'); out.innerHTML = "";
     document.getElementById('viewLabel').innerText = kit.toUpperCase();
+    
     if(kit === "Overall") {
-        Object.entries(DATA.Overall).sort((a,b)=>b[1]-a[1]).forEach(([name, pts], i) => {
+        const sorted = Object.entries(DATA.Overall).sort((a,b)=>b[1]-a[1]);
+        if(sorted.length === 0) { out.innerHTML = `<div class="empty-msg">NO RANKED PLAYERS</div>`; return; }
+        sorted.forEach(([name, pts], i) => {
             out.innerHTML += `<div class="tier-card clickable" onclick="openProfile('${name}')">
                 <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
                     <div><b style="color:var(--purple); font-size:0.7rem;">#${i+1}</b> <span style="font-weight:bold;">${name}</span>${getTags(name)}</div>
@@ -139,6 +155,9 @@ function render(kit) {
             </div>`;
         });
     } else {
+        if(!DATA.Rankings[kit] || Object.keys(DATA.Rankings[kit]).length === 0) {
+            out.innerHTML = `<div class="empty-msg">NO RANKED PLAYERS</div>`; return;
+        }
         const grid = document.createElement('div'); grid.style.display="flex"; grid.style.gap="15px"; grid.style.flexWrap="wrap"; grid.style.justifyContent="center";
         ["T1","T2","T3","T4","T5"].forEach(lvl => {
             let col = `<div style="min-width:180px;"><div class="tier-header">${lvl}</div>`;
@@ -174,7 +193,7 @@ function openProfile(name) {
                 const ct = t.startsWith('R') ? t.substring(1) : t;
                 grid += `<div class="p-kit-item">
                     <div class="kit-popup"><span class="popup-kit-name">${k}</span><span class="popup-tier-name">${ct}</span></div>
-                    <div class="p-kit-circle"><img src="${ASSETS}${KIT_MAP[k]}"></div><div class="tier-label-under">${ct}</div>
+                    <div class="p-kit-circle"><img src="${ASSETS}${KIT_MAP[k]}"></div><div style="font-size:0.65rem; color:var(--gold);">${ct}</div>
                 </div>`;
             }
         }
@@ -188,14 +207,14 @@ function switchTab(tab) {
     document.getElementById('nav-' + tab).classList.add('active');
     const out = document.getElementById('displayList');
     document.getElementById('kitBar').style.display = tab === 'rankings' ? "flex" : "none";
-    document.getElementById('viewLabel').innerText = tab.toUpperCase().replace('_', ' ');
+    document.getElementById('viewLabel').innerText = tab === 'rankings' ? "OVERALL" : (tab === 'hof' ? "HALL OF FAME" : "TIER TESTERS");
     out.innerHTML = "";
     
     if(tab === 'rankings') render("Overall");
     else if(tab === 'hof') {
         DATA.HOF.forEach(p => {
-            const hasProfile = DATA.Overall[p.name];
-            out.innerHTML += `<div class="tier-card ${hasProfile ? 'clickable' : ''}" ${hasProfile ? `onclick="openProfile('${p.name}')"` : ''}>
+            const canClick = DATA.Overall[p.name];
+            out.innerHTML += `<div class="tier-card ${canClick ? 'clickable' : ''}" ${canClick ? `onclick="openProfile('${p.name}')"` : ''}>
                 <div style="font-weight:bold; font-size:1.1rem; color:var(--gold);">${p.name}</div>
                 <div class="hof-desc">${p.description}</div>
             </div>`;
@@ -203,9 +222,9 @@ function switchTab(tab) {
     } else {
         DATA.Testers.forEach(p => {
             out.innerHTML += `<div class="tier-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div style="font-weight:bold;">${p.name}</div>
-                    <div class="tester-discord">${p.discord}</div>
+                    <div class="tester-discord">Discord: ${p.discord}</div>
                 </div>
             </div>`;
         });
@@ -230,7 +249,7 @@ function handleSearch(val) {
     const pop = document.getElementById('searchPopup');
     if(!val) { pop.style.display = 'none'; return; }
     const matches = Object.keys(DATA.Overall).filter(n => n.toLowerCase().includes(val.toLowerCase())).slice(0, 5);
-    pop.innerHTML = matches.map(m => `<div class="search-item" onclick="openProfile('${m}'); pop.style.display='none';"><b>${m}</b></div>`).join('');
+    pop.innerHTML = matches.map(m => `<div class="search-item" onclick="openProfile('${m}'); document.getElementById('searchPopup').style.display='none';"><b>${m}</b></div>`).join('');
     pop.style.display = matches.length ? 'block' : 'none';
 }
 
