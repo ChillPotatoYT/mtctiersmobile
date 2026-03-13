@@ -12,7 +12,6 @@
     --grey: #888;
 }
 
-/* --- GLOBAL --- */
 body { 
     background: var(--bg); color: #fff; font-family: 'Courier New', monospace; 
     margin: 0; overflow-x: hidden; display: flex; flex-direction: column; 
@@ -24,7 +23,6 @@ body {
     background: linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%); 
     background-size: 250% 100%; animation: shineSweep 8s infinite linear; pointer-events: none;
 }
-
 @keyframes shineSweep { 0% { background-position: 250% 0; } 100% { background-position: -250% 0; } }
 
 /* --- HEADER & NAV --- */
@@ -38,8 +36,7 @@ nav {
     width: 100%; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); 
     margin-top: 40px; box-sizing: border-box;
 }
-
-.nav-center { display: flex; gap: 30px; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-center { display: flex; gap: 30px; }
 .nav-link { color: #555; font-family: 'MultiCraftFont'; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
 .nav-link.active { color: #fff; text-shadow: 0 0 10px var(--purple); }
 
@@ -53,18 +50,18 @@ nav {
     position: absolute; top: 110%; left: 0; width: 100%; background: #050508; 
     border: 1px solid var(--purple); display: none; z-index: 500; 
 }
-.search-item { padding: 10px; border-bottom: 1px solid #222; cursor: pointer; font-family: 'MultiCraftFont'; font-size: 0.6rem; }
-.search-item:hover { background: #111; }
+.search-item { padding: 10px; border-bottom: 1px solid #222; cursor: pointer; font-size: 0.7rem; }
 
-/* --- PLAYER LIST & CARDS --- */
+/* --- LISTS & CARDS --- */
 #displayList { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
 .tier-card { 
     background: rgba(10, 10, 15, 0.8); border: 1px solid var(--border); 
-    border-radius: 6px; margin-bottom: 10px; padding: 15px; width: 600px; transition: 0.2s; 
+    border-radius: 6px; margin-bottom: 10px; padding: 15px; width: 600px; 
+    transition: 0.2s; box-sizing: border-box;
 }
 .clickable:hover { border-color: var(--purple); transform: translateY(-2px); cursor: pointer; }
 
-/* --- DYNAMIC TAGS (Regions & Devices) --- */
+/* --- TAGS & POPUPS --- */
 .tag-wrap { position: relative; display: inline-block; margin-right: 8px; cursor: help; }
 .tag { 
     font-family: 'MultiCraftFont'; font-size: 0.55rem; padding: 3px 8px; 
@@ -73,13 +70,12 @@ nav {
 .tag-popup { 
     position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); 
     background: #000; border: 1px solid var(--tag-color); padding: 5px 10px; 
-    font-size: 0.55rem; border-radius: 4px; white-space: nowrap; 
-    visibility: hidden; opacity: 0; transition: 0.2s; z-index: 1000; 
-    color: #fff; font-family: 'MultiCraftFont'; box-shadow: 0 0 10px #000;
+    font-size: 0.55rem; border-radius: 4px; visibility: hidden; opacity: 0; 
+    transition: 0.2s; z-index: 1000; color: #fff; white-space: nowrap;
 }
 .tag-wrap:hover .tag-popup { visibility: visible; opacity: 1; }
 
-/* --- PROFILE MODAL & KITS --- */
+/* --- PROFILE MODAL --- */
 .modal-overlay { 
     position: fixed; inset: 0; background: rgba(0,0,0,0.95); 
     z-index: 2000; display: none; align-items: center; justify-content: center; 
@@ -88,31 +84,24 @@ nav {
     background: #010102; border: 2px solid var(--purple); padding: 30px; 
     border-radius: 12px; width: 440px; text-align: center; 
 }
-
 #pTiers { 
     display: flex; flex-wrap: wrap; justify-content: center; 
-    gap: 18px; border-top: 1px solid #222; padding-top: 20px; 
+    gap: 18px; border-top: 1px solid #222; padding-top: 20px; margin-top: 15px;
 }
-
 .p-kit-item { position: relative; display: flex; flex-direction: column; align-items: center; width: 80px; }
-.p-kit-circle { 
-    width: 52px; height: 52px; border: 2px solid; border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; transition: 0.3s; 
-}
+.p-kit-circle { width: 52px; height: 52px; border: 2px solid; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .p-kit-circle img { width: 28px; }
 
-/* Kit Hover Tooltip (Matching Image 2) */
 .kit-popup { 
     position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); 
     background: #000; border: 2px solid var(--gold); border-radius: 6px; 
-    padding: 8px; opacity: 0; visibility: hidden; transition: 0.2s; 
-    z-index: 3000; font-family: 'MultiCraftFont'; font-size: 0.6rem; line-height: 1.4;
+    padding: 8px; opacity: 0; visibility: hidden; transition: 0.2s; z-index: 3000; 
+    font-family: 'MultiCraftFont'; font-size: 0.6rem; width: max-content;
 }
 .p-kit-item:hover .kit-popup { opacity: 1; visibility: visible; }
-.p-kit-item:hover .p-kit-circle { transform: scale(1.1); box-shadow: 0 0 10px var(--purple-glow); }
 
-/* --- MISC --- */
-#kitBar { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+/* --- BUTTONS --- */
+#kitBar { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
 .kit-btn { 
     background: transparent; border: 1px solid #333; color: #666; 
     padding: 8px 15px; font-family: 'MultiCraftFont'; font-size: 0.6rem; cursor: pointer; 
